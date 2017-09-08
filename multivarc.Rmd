@@ -69,3 +69,33 @@ Vamo melhorar então, põe umas *true colors shining through*
 ```{r echo=F,eval=T}
 autoplot(prcomp(iris.val,scale=T),data=iris,colour='Species')
 ```
+
+Ficou mais legal, mas pode ficar AINDA mais, usando a função `frame=T`, assim:
+```{r echo=T,eval=T}
+autoplot(prcomp(iris.val,scale=T),data=iris,colour='Species',frame=T)
+```
+
+Daí o negócio fica mais maneiro.
+
+####Galera, essa foi a primeira parte do tutorial de multivariadas no R, agora vem a segunda (isso mesmo) parte.
+
+Agora você vai impressionar os seus amigos com esse script sensacional.
+Seguindo o bonde, vamos continuar usando `iris` mesmo, pra não dar muito trabalho.
+
+O passo agora é fazer um `nmds`. O famoso pacote `vegan` tem uma função pra isso, a `metaMDS`.
+
+Primeiro é bom instalar o pacote...
+```{r echo=T, eval=F}
+install.packages("vegan")
+```
+
+E depois carrega o boneco
+```{r echo=T,eval=F}
+library(vegan)
+```
+
+Se você já pulou pra essa parte do tutorial, precisa fazer uma malandragem pra usar o dataset sem os nomes das espécies (tem outra forma de fazer isso lá no começo)
+
+```{r echo=T, eval=T}
+iris_data<-iris[ , 1:4]
+```
