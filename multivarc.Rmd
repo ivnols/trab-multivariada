@@ -1,16 +1,16 @@
 ---
 title: "tutorial multivariada"
-author: "V·rias pessoas"
+author: "V√°rias pessoas"
 date: "7 de setembro de 2017"
 output: html_document
 ---
 
-Nesse tutorial vocÍ vai aprender a impressionar seus colegas de trabalho calculando uma PCA e visualizando os resultados em gr·ficos do `ggplot2` (ousadia e alegria). 
-Pra isso, nÛs vamos usar o famosÌssimo dataset `Iris` ~~da banda goo goo dolls~~ e a funÁ„o `prcomp`. N„o precisa instalar nada (por enquanto).
+Nesse tutorial voc√™ vai aprender a impressionar seus colegas de trabalho calculando uma PCA e visualizando os resultados em gr√°ficos do `ggplot2` (ousadia e alegria). 
+Pra isso, n√≥s vamos usar o famos√≠ssimo dataset `Iris` ~~da banda goo goo dolls~~ e a fun√ß√£o `prcomp`. N√£o precisa instalar nada (por enquanto).
 
-O dataset iris j· vem no R, daÌ n„o precisa de muito drama (nada de `read.table` ou `read.csv` e tal, daÌ vou pular essa parte)
+O dataset iris j√° vem no R, da√≠ n√£o precisa de muito drama (nada de `read.table` ou `read.csv` e tal, da√≠ vou pular essa parte)
 
-sÛ precisa "falar"
+s√≥ precisa "falar"
 
 ```{r echo, eval=F}
 iris
@@ -21,7 +21,7 @@ e ele aparece
 head(iris)
 ```
 
-Nessa parte È bom instalar logo os pacotes que v„o ser usados, `ggplot2` e `ggfortify`, pra isso, È sÛ seguir os passos abaixo:
+Nessa parte √© bom instalar logo os pacotes que v√£o ser usados, `ggplot2` e `ggfortify`, pra isso, √© s√≥ seguir os passos abaixo:
 
 Instala os bonecos
 ```{r echo=T, eval=F}
@@ -34,14 +34,15 @@ E carrega eles, depois
 library(ggplot2)
 library(ggfortify)
 ```
-Esse aviso n„o È nada muito imporante, o `ggfortify` vai funcionar normalmente
+Esse aviso n√£o √© nada muito imporante, o `ggfortify` vai funcionar normalmente
 
 
 
-##Agora comeÁa a resenha
+##Agora come√ßa a resenha
 
 **Antes de tudo**
-Se vc tentar fazer a PCA sem especificar quais colunas o R tem q ler, vai dar um erro, daÌ È bom criar um objeto que sÛ tenha `valores`.
+
+Se vc tentar fazer a PCA sem especificar quais colunas o R tem q ler, vai dar um erro, da√≠ √© bom criar um objeto que s√≥ tenha `valores`.
 
 Fica um lance mais ou menos assim
 ```{r echo=F, eval=T}
@@ -51,20 +52,20 @@ iris.val=iris[c(1,2,3,4)]
 head(iris.val)
 ```
 
-DaÌ agora È sÛ usar a funÁ„o pra calcular a PCA
+Da√≠ agora √© s√≥ usar a fun√ß√£o pra calcular a PCA
 ```{r echo=T, eval=T}
 prcomp(iris.val,scale=T)
 ```
 
-Nesse momento vc deve estar se perguntando *pq essxs queridxs resolveram usar o ggplot????*, bom, pq a gente pode... sÛ isso mesmo. 
+Nesse momento vc deve estar se perguntando *pq essxs queridxs resolveram usar o ggplot????*, bom, pq a gente pode... s√≥ isso mesmo. 
 E vai ficar uma coisa mais ou menos assim
 
 ```{r echo=F,eval=T}
 autoplot(prcomp(iris.val,scale=T))
 ```
 
-Mas n„o t· bonito e n„o diz muita coisa, nÈ? 
-Vamo melhorar ent„o, pıe umas *true colors shining through*
+Mas n√£o t√° bonito e n√£o diz muita coisa, n√©? 
+Vamo melhorar ent√£o, p√µe umas *true colors shining through*
 ```{r echo=F,eval=T}
 autoplot(prcomp(iris.val,scale=T),data=iris,colour='Species')
 ```
