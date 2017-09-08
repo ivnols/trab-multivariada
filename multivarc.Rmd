@@ -90,7 +90,7 @@ install.packages("vegan")
 ```
 
 E depois carrega o boneco
-```{r echo=T,eval=F}
+```{r echo=T,eval=T}
 library(vegan)
 ```
 
@@ -98,4 +98,74 @@ Se você já pulou pra essa parte do tutorial, precisa fazer uma malandragem pra
 
 ```{r echo=T, eval=T}
 iris_data<-iris[ , 1:4]
+```
+
+####Agora começa a parte da análise em si.
+
+Primeiro vamos criar uma matriz de distância com os valores de Iris
+```{r echo=T, eval=T}
+iris_data_euc<-vegdist(iris_data, method="euclidean")
+```
+
+Nós usamos duas funções, `try` e `trymax`, pra limitar o mínimo e o máximo de rodadas ou tentativas. 
+
+A linha fica desse jeito
+```{r echo=T, eval=T}
+nmds.euc<-metaMDS(iris_data_euc, try=20, trymax=50)
+```
+
+Daí você quer ver um gráfico disso, certo?
+```{r echo=T, eval=T}
+plot(nmds.euc, type="t")
+```
+
+Eu sei... pode ser melhor. 
+Aqui você poderia tentar o `ggplot`, como na análise anterior, mas eu vou passar pra vocês o que chamamos de modo oldschool...
+
+Primeiro vamos dar nome aos bois (ou às plantas, sei lá...).
+
+```{r echo=T,eval=F}
+as.data.frame(iris[ ,5])
+```
+
+```{r echo=T, eval=T}
+sp_iris=iris[,5]
+```
+
+Agora vamo fazer o gráfico *oldschool*
+
+Primeiro escolhe as cores das espécies
+```{r echo=T, eval=T}
+cores.sp<-c("blue", "red", "green")
+```
+
+Agora, vamos ao gráfico
+
+```{r echo=T,eval=F}
+plot(nmds.euc, type="n")
+points(nmds.euc, pch=16, col=cores.sp[sp_iris])
+ordihull(nmds.euc,sp_iris, col=cores.sp)
+```
+
+Se executar cada linha dessas uma após a outra você vai ter mais ou menos isso
+
+```{r echo=F,eval=T}
+plot(nmds.euc, type="n")
+points(nmds.euc, pch=16, col=cores.sp[sp_iris])
+ordihull(nmds.euc,sp_iris, col=cores.sp)
+```
+
+Mas pode ficar mais legal, é só fazer o seguinte
+
+```{r echo=T,eval=T}
+envfit.euc<-envfit(nmds.euc, iris_data)
+```
+
+Depois isso aqui
+```{r echo=T, eval=T}
+envfit.euc
+```
+
+```{r echo=T, eval=T}
+plot(envfit.euc,type="t")
 ```
