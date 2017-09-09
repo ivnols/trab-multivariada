@@ -1,16 +1,17 @@
 ---
 title: "tutorial multivariada"
-author: "V√°rias pessoas"
+author: "Ciro, Ivan, Jessika, Luana e Morgana"
 date: "7 de setembro de 2017"
 output: html_document
 ---
 
-Nesse tutorial voc√™ vai aprender a impressionar seus colegas de trabalho calculando uma PCA e visualizando os resultados em gr√°ficos do `ggplot2` (ousadia e alegria). 
-Pra isso, n√≥s vamos usar o famos√≠ssimo dataset `Iris` ~~da banda goo goo dolls~~ e a fun√ß√£o `prcomp`. N√£o precisa instalar nada (por enquanto).
+Com esse tutorial vocÍ vai impressionar seus colegas de trabalho com duas an·lises multivariadas sofistiacadÌssimas, a PCA (an·lise de componentes principais) e o NMDS (non-metric multidimensional scaling) visualizando os resultados em gr·ficos do `ggplot2`. 
 
-O dataset iris j√° vem no R, da√≠ n√£o precisa de muito drama (nada de `read.table` ou `read.csv` e tal, da√≠ vou pular essa parte)
+Pra isso, nÛs vamos usar o famosÌssimo dataset `iris` [link](https://www.youtube.com/watch?v=NdYWuo9OFAw) ~~da banda goo goo dolls~~ e a funÁ„o `prcomp`. N„o precisa instalar nada (por enquanto).
 
-s√≥ precisa "falar"
+O dataset `iris` j· vem no R, daÌ n„o precisa de muito drama (nada de `read.table` ou `read.csv` e tal, ent„o vamos pular essa parte).
+
+sÛ precisa "falar"
 
 ```{r echo, eval=F}
 iris
@@ -21,108 +22,105 @@ e ele aparece
 head(iris)
 ```
 
-Nessa parte √© bom instalar logo os pacotes que v√£o ser usados, `ggplot2` e `ggfortify`, pra isso, √© s√≥ seguir os passos abaixo:
+Nessa parte È bom instalar logo os pacotes que v„o ser usados, `ggplot2` e `ggfortify`, pra isso, sÛ seguir os passos abaixo:
 
-Instala os bonecos
+Primeiro, instala os bonecos
 ```{r echo=T, eval=F}
 install.packages("ggplot2")
 install.packages("ggfortify")
 ```
 
 E carrega eles, depois
-```{r echo=T, eval=T}
+```{r echo=T, eval=T,message=F,warning=F}
 library(ggplot2)
 library(ggfortify)
 ```
-Esse aviso n√£o √© nada muito imporante, o `ggfortify` vai funcionar normalmente
 
-
-
-##Agora come√ßa a resenha
+##Agora comeÁa a resenha
 
 **Antes de tudo**
 
-Se vc tentar fazer a PCA sem especificar quais colunas o R tem q ler, vai dar um erro, da√≠ √© bom criar um objeto que s√≥ tenha `valores`.
+Se vc tentar fazer a PCA sem especificar quais colunas o R tem q ler, vai dar um erro, ent„o, È bom criar um objeto que sÛ tenha `valores`.
 
 Fica um lance mais ou menos assim
-```{r echo=F, eval=T}
+```{r echo=T, eval=T}
 iris.val=iris[c(1,2,3,4)]
 ```
-```{r echo=F, eval=T}
+```{r echo=T, eval=T}
 head(iris.val)
 ```
 
-Da√≠ agora √© s√≥ usar a fun√ß√£o pra calcular a PCA
+Agora podemos usar a funÁ„o `prmcomp` e calcular a PCA
 ```{r echo=T, eval=T}
 prcomp(iris.val,scale=T)
 ```
 
-Nesse momento vc deve estar se perguntando *pq essxs queridxs resolveram usar o ggplot????*, bom, pq a gente pode... s√≥ isso mesmo. 
+Nesse momento vc deve estar se perguntando *pq essxs queridxs resolveram usar o ggplot????*, bom, pq a gente pode... sÛ isso mesmo. 
 E vai ficar uma coisa mais ou menos assim
 
-```{r echo=F,eval=T}
+```{r echo=T,eval=T}
 autoplot(prcomp(iris.val,scale=T))
 ```
 
-Mas n√£o t√° bonito e n√£o diz muita coisa, n√©? 
-Vamo melhorar ent√£o, p√µe umas *true colors shining through*
-```{r echo=F,eval=T}
+Mas n„o t· t„o bonito assim, e nem diz muito coisa, nÈ?
+Vamo tentar melhorar, pıe umas *true colors shining through*  [link](https://www.youtube.com/watch?v=LPn0KFlbqX8)
+
+```{r echo=T,eval=T}
 autoplot(prcomp(iris.val,scale=T),data=iris,colour='Species')
 ```
 
-Ficou mais legal, mas pode ficar AINDA mais, usando a fun√ß√£o `frame=T`, assim:
+Ficou mais legal, mas pode ficar AINDA mais, usando a funÁ„o `frame=T`, assim:
 ```{r echo=T,eval=T}
 autoplot(prcomp(iris.val,scale=T),data=iris,colour='Species',frame=T)
 ```
 
-Da√≠ o neg√≥cio fica mais maneiro.
+Agora o negÛcio ficou mais maneiro.
 
 ####Galera, essa foi a primeira parte do tutorial de multivariadas no R, agora vem a segunda (isso mesmo) parte.
 
-Agora voc√™ vai impressionar os seus amigos com esse script sensacional.
-Seguindo o bonde, vamos continuar usando `iris` mesmo, pra n√£o dar muito trabalho.
+Seguindo o bonde, vamos continuar usando `iris` mesmo, pra n„o ter muito trabalho.
 
-O passo agora √© fazer um `nmds`. O famoso pacote `vegan` tem uma fun√ß√£o pra isso, a `metaMDS`.
+O passo agora È fazer um `nmds`. O famoso pacote `vegan` tem uma funÁ„o pra isso, a `metaMDS`.
 
-Primeiro √© bom instalar o pacote...
-```{r echo=T, eval=F}
+Primeiro È bom instalar o pacote...
+```{r echo=T, eval=F,message=F,warning=F}
 install.packages("vegan")
 ```
 
 E depois carrega o boneco
-```{r echo=T,eval=T}
+```{r echo=T,eval=T,message=F,warning=F}
 library(vegan)
 ```
 
-Se voc√™ j√° pulou pra essa parte do tutorial, precisa fazer uma malandragem pra usar o dataset sem os nomes das esp√©cies (tem outra forma de fazer isso l√° no come√ßo)
+Se vocÍ pulou pra essa parte do tutorial e perdeu as dicas do comeÁo, precisa fazer uma malandragem pra usar o dataset sem os nomes das espÈcies (tem outra forma de fazer isso l· no comeÁo).
 
 ```{r echo=T, eval=T}
 iris_data<-iris[ , 1:4]
 ```
 
-####Agora come√ßa a parte da an√°lise em si.
+####Agora comeÁa a parte da an·lise em si.
 
-Primeiro vamos criar uma matriz de dist√¢ncia com os valores de Iris
+Primeiro vamos criar uma matriz de dist‚ncia com os valores de Iris
 ```{r echo=T, eval=T}
 iris_data_euc<-vegdist(iris_data, method="euclidean")
 ```
 
-N√≥s usamos duas fun√ß√µes, `try` e `trymax`, pra limitar o m√≠nimo e o m√°ximo de rodadas ou tentativas. 
+NÛs usamos duas funÁıes, `try` e `trymax`, pra limitar o mÌnimo e o m·ximo de rodadas ou tentativas. 
 
 A linha fica desse jeito
 ```{r echo=T, eval=T}
 nmds.euc<-metaMDS(iris_data_euc, try=20, trymax=50)
 ```
 
-Da√≠ voc√™ quer ver um gr√°fico disso, certo?
-```{r echo=T, eval=T}
+DaÌ vocÍ quer ver um gr·fico disso, certo?
+```{r echo=T, eval=T,message=F,warning=F}
 plot(nmds.euc, type="t")
 ```
 
 Eu sei... pode ser melhor. 
-Aqui voc√™ poderia tentar o `ggplot`, como na an√°lise anterior, mas eu vou passar pra voc√™s o que chamamos de modo oldschool...
+Aqui vocÍ poderia tentar o `ggplot`, como na an·lise anterior, mas eu vou passar pra vocÍs o que chamamos de modo oldschool...
 
-Primeiro vamos dar nome aos bois (ou √†s plantas, sei l√°...).
+Primeiro vamos dar nome aos bois (ou ‡s plantas, sei l·...).
 
 ```{r echo=T,eval=F}
 as.data.frame(iris[ ,5])
@@ -134,12 +132,12 @@ sp_iris=iris[,5]
 
 Agora vamo fazer o gr√°fico *oldschool*
 
-Primeiro escolhe as cores das esp√©cies
+Primeiro escolhe as cores das espÈcies
 ```{r echo=T, eval=T}
 cores.sp<-c("blue", "red", "green")
 ```
 
-Agora, vamos ao gr√°fico
+Agora, vamos ao gr·fico
 
 ```{r echo=T,eval=F}
 plot(nmds.euc, type="n")
@@ -147,25 +145,14 @@ points(nmds.euc, pch=16, col=cores.sp[sp_iris])
 ordihull(nmds.euc,sp_iris, col=cores.sp)
 ```
 
-Se executar cada linha dessas uma ap√≥s a outra voc√™ vai ter mais ou menos isso
+Se executar cada linha dessas uma apÛs a outra vocÍ vai ter mais ou menos isso
 
-```{r echo=F,eval=T}
+```{r echo=T,eval=T,message=F,warning=F}
 plot(nmds.euc, type="n")
 points(nmds.euc, pch=16, col=cores.sp[sp_iris])
 ordihull(nmds.euc,sp_iris, col=cores.sp)
-```
-
-Mas pode ficar mais legal, √© s√≥ fazer o seguinte
-
-```{r echo=T,eval=T}
 envfit.euc<-envfit(nmds.euc, iris_data)
+plot(envfit.euc)
 ```
 
-Depois isso aqui
-```{r echo=T, eval=T}
-envfit.euc
-```
-
-```{r echo=T, eval=T}
-plot(envfit.euc,type="t")
-```
+####E È isso, rapeize, espero que tenha sido instrutivo. Qualquer d˙vida, È sÛ entrar em contato com xs autorxs ou buscar as cheat sheets dos pacotes no google.
